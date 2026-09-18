@@ -36,7 +36,13 @@
             </thead>
             <tbody>
             <tr data-testid="order-line" th:each="line : ${order.lines}">
-                <td data-testid="order-line-name" th:text="${line.name}">Nombre</td>
+                <td data-testid="order-line-name">
+                    <div class="line-product">
+                        <img class="line-thumb" data-testid="order-line-image"
+                             th:src="@{${line.imagePath}}" th:alt="${line.name}"/>
+                        <span th:text="${line.name}">Nombre</span>
+                    </div>
+                </td>
                 <td th:text="${line.quantity}">1</td>
                 <td data-testid="order-line-total"
                     th:text="${#numbers.formatDecimal(line.total, 1, 2, 'POINT')}">0.00</td>

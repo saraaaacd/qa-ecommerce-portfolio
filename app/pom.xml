@@ -11,7 +11,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.jesus.store</groupId>
+    <groupId>com.sara.store</groupId>
     <artifactId>store-app</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>Store App (SUT)</name>

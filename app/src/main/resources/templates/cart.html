@@ -31,7 +31,13 @@
             </thead>
             <tbody>
             <tr data-testid="cart-line" th:each="line : ${cart.lines}">
-                <td data-testid="line-name" th:text="${line.name}">Nombre</td>
+                <td data-testid="line-name">
+                    <div class="line-product">
+                        <img class="line-thumb" data-testid="line-image"
+                             th:src="@{${line.imagePath}}" th:alt="${line.name}"/>
+                        <span th:text="${line.name}">Nombre</span>
+                    </div>
+                </td>
                 <td data-testid="line-unit-price"
                     th:text="${#numbers.formatDecimal(line.unitPrice, 1, 2, 'POINT')}">0.00</td>
                 <td data-testid="line-qty" th:text="${line.quantity}">1</td>

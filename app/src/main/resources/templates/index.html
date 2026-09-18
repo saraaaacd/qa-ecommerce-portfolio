@@ -21,6 +21,10 @@
 
     <div class="grid" th:if="${!#lists.isEmpty(products)}">
         <article class="card" data-testid="product-card" th:each="p : ${products}">
+            <div class="card-media">
+                <img class="product-thumb" data-testid="product-image"
+                     th:src="@{${p.imagePath}}" th:alt="${p.name}"/>
+            </div>
             <div class="card-body">
                 <span class="tag" data-testid="product-category" th:text="${p.category}">categoria</span>
                 <h2 data-testid="product-name" th:text="${p.name}">Producto</h2>

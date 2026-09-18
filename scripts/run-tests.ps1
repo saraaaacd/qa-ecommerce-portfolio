@@ -9,8 +9,14 @@ $root = Split-Path -Parent $PSScriptRoot
 $mvnw = Join-Path $root 'mvnw.cmd'
 if (-not (Test-Path $mvnw)) { throw 'No se encontro mvnw.cmd en la raiz del proyecto.' }
 if (-not $env:JAVA_HOME) {
-    Write-Warning 'JAVA_HOME no definido. Se requiere un JDK 17+ (usa IntelliJ o define JAVA_HOME).'
-    exit 1
+    $fallbackJdk = Join-Path $HOME 'AppData\Local\Temp\opencode\tools\jdk-21'
+    if (Test-Path $fallbackJdk) {
+        $env:JAVA_HOME = $fallbackJdk
+        Write-Host "JAVA_HOME no definido: usando JDK portable ($fallbackJdk)."
+    } else {
+        Write-Warning 'JAVA_HOME no definido. Se requiere un JDK 17+ (usa IntelliJ o define JAVA_HOME).'
+        exit 1
+    }
 }
 
 # Asegura que el SUT este levantado
@@ -29,7 +35,8 @@ $headlessArgs = if ($Headless) { @('-Dheadless=true') } else { @() }
 
 Push-Location (Join-Path $root 'qa')
 try {
-    & $mvnw @('test') @groupsArgs @browserArgs @headlessArgs
+    $mavenArgs = @('test') + $groupsArgs + $browserArgs + $headlessArgs
+    & $mvnw $mavenArgs
     exit $LASTEXITCODE
 }
 finally {

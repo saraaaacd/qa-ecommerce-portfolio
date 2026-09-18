@@ -32,27 +32,29 @@ real, suite de pruebas que no depende de apps de terceros y CI reproducible.
 qa-ecommerce-portfolio/
 ├─ app/                          # SUT: tienda e-commerce
 │  └─ src/main/
-│     ├─ java/com/jesus/store/
+│     ├─ java/com/sara/store/
 │     │  ├─ catalog/             # Producto, repositorio, Home (MVC) y API /api/products
 │     │  ├─ cart/                # Carrito en sesión HTTP, controllers MVC + API /api/cart
 │     │  ├─ order/               # Pedido simulado, controllers MVC + API /api/orders
 │     │  └─ config/              # DataSeeder (6 productos), endpooint de reset de datos
 │     └─ resources/
 │        ├─ templates/           # Vistas Thymeleaf con data-testid
-│        └─ static/css/          # Estilos
+│        └─ static/
+│           ├─ css/              # Estilos
+│           └─ images/products/  # Imagenes SVG de los productos
 ├─ qa/                           # Framework de pruebas
-│  ├─ src/main/java/com/jesus/qa/
+│  ├─ src/main/java/com/sara/qa/
 │  │  ├─ config/                 # Config por propiedades/env (override con -D o QA_*)
 │  │  ├─ driver/                 # DriverFactory + DriverManager (chrome/edge/firefox)
 │  │  ├─ pages/                  # Page Object Model (BasePage, Home, Cart, Checkout, Order…)
 │  │  ├─ api/                    # StoreApiClient (REST client con sesión aislada)
 │  │  └─ utils/                  # ScreenshotUtils (captura en fallos)
-│  └─ src/test/java/com/jesus/qa/
+│  └─ src/test/java/com/sara/qa/
 │     ├─ api/                    # CatalogApiTests, CartApiTests, OrderApiTests
 │     ├─ ui/                     # HomePageTests, CartFlowTests, CheckoutUiTests
 │     ├─ a11y/                   # AccessibilityTests (axe-core)
 │     └─ base/                   # BaseTest / BaseApiTest (setup y teardown)
-├─ scripts/                      # start-app.ps1, run-tests.ps1, stop-app.ps1
+├─ scripts/                      # start-app.ps1, run-tests.ps1, stop-app.ps1, abrir-app.cmd, parar-app.cmd
 └─ .github/workflows/ci.yml      # CI
 ```
 
@@ -68,7 +70,7 @@ qa-ecommerce-portfolio/
 
 ## Arrancar el SUT
 
-Desde IntelliJ: ejecutar `com.jesus.store.StoreApplication`.
+Desde IntelliJ: ejecutar `com.sara.store.StoreApplication`.
 
 Desde terminal (requiere `JAVA_HOME` apuntando a un JDK 17+):
 
@@ -97,6 +99,8 @@ borra pedidos anteriores.
 ## Ejecutar la suite
 
 El SUT debe estar corriendo en `http://localhost:8080` (`run-tests.ps1` lo arranca solo si no está).
+
+También hay accesos de doble clic: `abrir-app.cmd` (arranca la app si no está y abre el navegador) y `parar-app.cmd` (la detiene).
 
 ```powershell
 # Todo (API + UI + accesibilidad)
@@ -134,7 +138,7 @@ mvnw -f qa/pom.xml test -Dheadless=true -Dbrowser=chrome  # overrides de config
 | `CatalogApiTests`        | `api`    | Catálogo: 6 productos, campos esperados, producto inexistente → 404 |
 | `CartApiTests`           | `api`    | Carrito: totales, quitar/vaciar, producto inexistente → 404, **aislamiento entre sesiones** |
 | `OrderApiTests`          | `api`    | Pedido desde carrito, carrito vacío → 400, validación de campos, pedido inexistente → 404, reset de datos |
-| `HomePageTests`          | `ui`     | Home muestra el catálogo, añadir incrementa el contador, navegación al carrito |
+| `HomePageTests`          | `ui`     | Home muestra el catálogo, cada producto muestra su imagen, añadir incrementa el contador, navegación al carrito |
 | `CartFlowTests`          | `ui`     | Flujo E2E completo (catálogo → carrito → checkout → confirmación), quitar recalcula total |
 | `CheckoutUiTests`        | `ui`     | Validación del formulario (nombre/email) y redirect con carrito vacío |
 | `AccessibilityTests`     | `a11y`   | axe-core sobre Home, Carrito y Checkout: **falla solo ante violaciones CRÍTICAS** WCAG A/AA |

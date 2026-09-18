@@ -16,8 +16,14 @@ $mvnw = Find-MavenWrapper -Root $root
 $pidFile = Join-Path $root 'app\target\store-app.pid'
 
 if (-not $env:JAVA_HOME) {
-    Write-Warning 'JAVA_HOME no definido. Se requiere un JDK 17+ (usa IntelliJ o define JAVA_HOME).'
-    exit 1
+    $fallbackJdk = Join-Path $HOME 'AppData\Local\Temp\opencode\tools\jdk-21'
+    if (Test-Path $fallbackJdk) {
+        $env:JAVA_HOME = $fallbackJdk
+        Write-Host "JAVA_HOME no definido: usando JDK portable ($fallbackJdk)."
+    } else {
+        Write-Warning 'JAVA_HOME no definido. Se requiere un JDK 17+ (usa IntelliJ o define JAVA_HOME).'
+        exit 1
+    }
 }
 
 # 1. Empaqueta la app si el jar no existe
