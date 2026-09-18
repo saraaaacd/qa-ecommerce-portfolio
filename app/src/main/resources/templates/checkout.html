@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Checkout - Tienda QA</title>
+    <link rel="stylesheet" th:href="@{/css/store.css}"/>
+</head>
+<body>
+<header class="nav">
+    <a href="/" class="brand" data-testid="nav-home">Tienda QA</a>
+    <a href="/cart" class="cart-link" data-testid="nav-cart">
+        Carrito
+        <span class="badge" data-testid="cart-count" th:text="${cartCount}">0</span>
+    </a>
+</header>
+
+<main class="container narrow">
+    <h1>Datos de entrega</h1>
+    <p class="subtitle">Pedido simulado: no hay pago ni tarjeta.</p>
+
+    <form class="checkout-form" th:action="@{/checkout}" th:object="${createOrderRequest}"
+          method="post" novalidate>
+        <div class="field">
+            <label for="customerName">Nombre y apellidos *</label>
+            <input id="customerName" type="text" th:field="*{customerName}" data-testid="customer-name"/>
+            <span class="error" th:errors="*{customerName}" data-testid="customer-name-error"></span>
+        </div>
+
+        <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" th:field="*{email}" data-testid="email"/>
+            <span class="error" th:errors="*{email}" data-testid="email-error"></span>
+        </div>
+
+        <div class="field">
+            <label for="phone">Telefono</label>
+            <input id="phone" type="tel" th:field="*{phone}" data-testid="phone"/>
+        </div>
+
+        <div class="field">
+            <label for="address">Direccion *</label>
+            <input id="address" type="text" th:field="*{address}" data-testid="address"/>
+            <span class="error" th:errors="*{address}" data-testid="address-error"></span>
+        </div>
+
+        <div class="field-row">
+            <div class="field">
+                <label for="city">Ciudad *</label>
+                <input id="city" type="text" th:field="*{city}" data-testid="city"/>
+                <span class="error" th:errors="*{city}" data-testid="city-error"></span>
+            </div>
+            <div class="field">
+                <label for="zip">Codigo postal *</label>
+                <input id="zip" type="text" th:field="*{zip}" data-testid="zip"/>
+                <span class="error" th:errors="*{zip}" data-testid="zip-error"></span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a class="btn" data-testid="back-to-cart" href="/cart">Volver al carrito</a>
+            <button class="btn btn-primary" type="submit" data-testid="submit-order">
+                Confirmar pedido
+            </button>
+        </div>
+    </form>
+</main>
+
+<footer class="footer">Proyecto de portfolio QA Automation</footer>
+</body>
+</html>

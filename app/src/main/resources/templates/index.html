@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Tienda QA</title>
+    <link rel="stylesheet" th:href="@{/css/store.css}"/>
+</head>
+<body>
+<header class="nav">
+    <a href="/" class="brand" data-testid="nav-home">Tienda QA</a>
+    <a href="/cart" class="cart-link" data-testid="nav-cart">
+        Carrito
+        <span class="badge" data-testid="cart-count" th:text="${cartCount}">0</span>
+    </a>
+</header>
+
+<main class="container">
+    <h1>Catalogo</h1>
+    <p class="subtitle">Demo sin pagos reales: al finalizar solo se guarda un pedido simulado.</p>
+
+    <div class="grid" th:if="${!#lists.isEmpty(products)}">
+        <article class="card" data-testid="product-card" th:each="p : ${products}">
+            <div class="card-body">
+                <span class="tag" data-testid="product-category" th:text="${p.category}">categoria</span>
+                <h2 data-testid="product-name" th:text="${p.name}">Producto</h2>
+                <p th:text="${p.description}">descripcion</p>
+            </div>
+            <div class="card-footer">
+                <strong class="price" data-testid="product-price"
+                        th:text="${#numbers.formatDecimal(p.price, 1, 2, 'POINT')}">0.00</strong>
+                <form method="post" th:action="@{/cart/items/add/{id}(id=${p.id})}">
+                    <button class="btn btn-primary" type="submit" data-testid="add-to-cart">Anadir</button>
+                </form>
+            </div>
+        </article>
+    </div>
+
+    <p th:if="${#lists.isEmpty(products)}" data-testid="empty-catalog">No hay productos disponibles.</p>
+</main>
+
+<footer class="footer">Proyecto de portfolio QA Automation</footer>
+</body>
+</html>

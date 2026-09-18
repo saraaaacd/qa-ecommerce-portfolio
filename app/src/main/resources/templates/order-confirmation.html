@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Pedido confirmado - Tienda QA</title>
+    <link rel="stylesheet" th:href="@{/css/store.css}"/>
+</head>
+<body>
+<header class="nav">
+    <a href="/" class="brand" data-testid="nav-home">Tienda QA</a>
+    <a href="/cart" class="cart-link" data-testid="nav-cart">
+        Carrito
+        <span class="badge" data-testid="cart-count" th:text="${cartCount}">0</span>
+    </a>
+</header>
+
+<main class="container narrow">
+    <h1 data-testid="confirmation-title">Pedido confirmado</h1>
+    <p class="subtitle">Gracias por tu compra (simulada). Te enviamos el resumen a
+        <span th:text="${order.email}">&nbsp;</span>.</p>
+
+    <div class="order-box">
+        <p>
+            <span>Numero de pedido:</span>
+            <strong data-testid="order-number" th:text="${order.orderNumber}">ORD-...</strong>
+        </p>
+
+        <table class="cart-table">
+            <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-testid="order-line" th:each="line : ${order.lines}">
+                <td data-testid="order-line-name" th:text="${line.name}">Nombre</td>
+                <td th:text="${line.quantity}">1</td>
+                <td data-testid="order-line-total"
+                    th:text="${#numbers.formatDecimal(line.total, 1, 2, 'POINT')}">0.00</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="cart-total">
+            <span>Total:</span>
+            <strong data-testid="order-total"
+                    th:text="${#numbers.formatDecimal(order.totalAmount, 1, 2, 'POINT')}">0.00</strong>
+        </div>
+
+        <p class="shipping">
+            Envio a: <span th:text="${order.address}">direccion</span>,
+            <span th:text="${order.zip}">CP</span>
+            <span th:text="${order.city}">ciudad</span>
+        </p>
+    </div>
+
+    <div class="actions">
+        <a class="btn btn-primary" data-testid="back-home" href="/">Volver a la tienda</a>
+    </div>
+</main>
+
+<footer class="footer">Proyecto de portfolio QA Automation</footer>
+</body>
+</html>

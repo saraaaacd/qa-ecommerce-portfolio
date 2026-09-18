@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Carrito - Tienda QA</title>
+    <link rel="stylesheet" th:href="@{/css/store.css}"/>
+</head>
+<body>
+<header class="nav">
+    <a href="/" class="brand" data-testid="nav-home">Tienda QA</a>
+    <a href="/cart" class="cart-link" data-testid="nav-cart">
+        Carrito
+        <span class="badge" data-testid="cart-count" th:text="${cartCount}">0</span>
+    </a>
+</header>
+
+<main class="container">
+    <h1>Tu carrito</h1>
+
+    <th:block th:if="${!cart.isEmpty()}">
+        <table class="cart-table">
+            <thead>
+            <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr data-testid="cart-line" th:each="line : ${cart.lines}">
+                <td data-testid="line-name" th:text="${line.name}">Nombre</td>
+                <td data-testid="line-unit-price"
+                    th:text="${#numbers.formatDecimal(line.unitPrice, 1, 2, 'POINT')}">0.00</td>
+                <td data-testid="line-qty" th:text="${line.quantity}">1</td>
+                <td data-testid="line-total"
+                    th:text="${#numbers.formatDecimal(line.total, 1, 2, 'POINT')}">0.00</td>
+                <td>
+                    <form method="post" th:action="@{/cart/items/remove/{id}(id=${line.productId})}">
+                        <button class="btn btn-ghost" type="submit" data-testid="remove-item">Quitar</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="cart-total">
+            <span>Total:</span>
+            <strong data-testid="cart-total"
+                    th:text="${#numbers.formatDecimal(cart.total, 1, 2, 'POINT')}">0.00</strong>
+        </div>
+
+        <div class="actions">
+            <a class="btn" data-testid="continue-shopping" href="/">Seguir comprando</a>
+            <a class="btn btn-primary" data-testid="checkout" href="/checkout">Finalizar compra</a>
+        </div>
+    </th:block>
+
+    <p th:if="${cart.isEmpty()}" data-testid="cart-empty">Tu carrito esta vacio.</p>
+</main>
+
+<footer class="footer">Proyecto de portfolio QA Automation</footer>
+</body>
+</html>

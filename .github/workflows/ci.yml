@@ -1,0 +1,73 @@
+name: CI
+
+# Triggers: push a main, pull requests y ejecucion manual
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  QA_BROWSER: chrome
+  QA_HEADLESS: "true"
+
+jobs:
+  test:
+    name: QA suite (API + UI + A11y)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Arrancar el SUT en background
+        run: |
+          cd app
+          ../mvnw -q spring-boot:run > /tmp/sut.log 2>&1 &
+          APP_PID=$!
+          echo "SUT PID=$APP_PID"
+          READY=0
+          for i in $(seq 1 90); do
+            if curl -fsS http://localhost:8080/actuator/health >/dev/null 2>&1; then
+              READY=1
+              echo "SUT listo (intento $i)"
+              break
+            fi
+            sleep 2
+          done
+          if [ "$READY" != "1" ]; then
+            echo "El SUT no levanto:"
+            tail -60 /tmp/sut.log
+            exit 1
+          fi
+          echo "$APP_PID" > /tmp/sut.pid
+
+      - name: Ejecutar la suite QA
+        run: |
+          cd qa
+          ../mvnw -q test
+
+      - name: Detener el SUT
+        if: always()
+        run: kill $(cat /tmp/sut.pid) 2>/dev/null || true
+
+      - name: Subir resultados Allure (artifact)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: qa/target/allure-results
+          if-no-files-found: warn
+
+      - name: Publicar reporte Allure en GitHub Pages
+        if: ${{ always() && github.ref == 'refs/heads/main' }}
+        uses: simple-elf/allure-report-action@v1.9
+        with:
+          results: qa/target/allure-results
+          gh_pages: gh_pages
+          allure_history: allure-history
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
