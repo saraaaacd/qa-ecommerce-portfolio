@@ -15,6 +15,9 @@ jobs:
   test:
     name: QA suite (API + UI + A11y)
     runs-on: ubuntu-latest
+    # Necesario para que GITHUB_TOKEN pueda hacer push a la rama gh_pages
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
