@@ -88,6 +88,7 @@ class CheckoutUiTests extends BaseTest {
         checkout.submit();
 
         assertTrue(checkout.hasFieldError("email-error"));
+        assertTrue(checkout.hasFieldError("email-format-hint"));
     }
 
     @Test

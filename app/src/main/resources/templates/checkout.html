@@ -31,6 +31,9 @@
             <label for="email">Email</label>
             <input id="email" type="email" th:field="*{email}" data-testid="email"/>
             <span class="error" th:errors="*{email}" data-testid="email-error"></span>
+            <span class="hint" th:if="${#fields.hasErrors('email')}" data-testid="email-format-hint">
+                Formato válido: nombre@dominio.com
+            </span>
         </div>
 
         <div class="field">
