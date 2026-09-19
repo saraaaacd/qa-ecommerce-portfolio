@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Error - Tienda QA</title>
+    <title>Error - SMARTStore</title>
     <link rel="stylesheet" th:href="@{/css/store.css}"/>
 </head>
 <body>
 <header class="nav">
-    <a href="/" class="brand" data-testid="nav-home">Tienda QA</a>
+    <a href="/" class="brand" data-testid="nav-home">SMARTStore</a>
 </header>
 
 <main class="container narrow error-page">
     <h1 data-testid="error-title">Ups, algo salio mal</h1>
     <p>Codigo: <strong th:text="${status}">500</strong></p>
     <p th:if="${message}" data-testid="error-message" th:text="${message}">mensaje</p>
-    <p class="shipping">Este es el entorno de demo: puedes volver al catalogo.</p>
+    <p class="shipping">Este es el entorno de demo: puedes volver al catálogo.</p>
     <div class="actions">
-        <a class="btn btn-primary" data-testid="back-home" href="/">Volver al catalogo</a>
+        <a class="btn btn-primary" data-testid="back-home" href="/">Volver al catálogo</a>
     </div>
 </main>
 
-<footer class="footer">Proyecto de portfolio QA Automation</footer>
+<footer class="footer">Proyecto diseñado para QA Automation</footer>
 </body>
 </html>

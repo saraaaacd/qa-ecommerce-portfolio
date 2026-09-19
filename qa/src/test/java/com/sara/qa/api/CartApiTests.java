@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DisplayName("Carrito - API")
 class CartApiTests extends BaseApiTest {
 
-    private static final String PRODUCTO = "Teclado mecanico RGB";
+    private static final String PRODUCTO = "Teclado RGB blanco";
 
     @Test
     @DisplayName("Anadir 2 unidades calcula totalItems y total")
@@ -36,10 +36,10 @@ class CartApiTests extends BaseApiTest {
     @Test
     @DisplayName("Anadir productos distintos suma sus importes")
     void addDifferentProductsSumsTotals() {
-        BigDecimal teclado = client.price("Teclado mecanico RGB");
+        BigDecimal teclado = client.price("Teclado RGB blanco");
         BigDecimal monitor = client.price("Monitor 24\" Full HD");
 
-        long tecladoId = client.productId("Teclado mecanico RGB");
+        long tecladoId = client.productId("Teclado RGB blanco");
         long monitorId = client.productId("Monitor 24\" Full HD");
 
         client.addToCart(tecladoId, 1).then().statusCode(201);
@@ -54,7 +54,7 @@ class CartApiTests extends BaseApiTest {
     @Test
     @DisplayName("Quitar un producto actualiza el carrito")
     void removeItemUpdatesCart() {
-        long tecladoId = client.productId("Teclado mecanico RGB");
+        long tecladoId = client.productId("Teclado RGB blanco");
         long monitorId = client.productId("Monitor 24\" Full HD");
 
         client.addToCart(tecladoId, 1).then().statusCode(201);

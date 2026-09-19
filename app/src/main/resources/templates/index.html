@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Tienda QA</title>
+    <title>SMARTStore</title>
     <link rel="stylesheet" th:href="@{/css/store.css}"/>
 </head>
 <body>
 <header class="nav">
-    <a href="/" class="brand" data-testid="nav-home">Tienda QA</a>
+    <a href="/" class="brand" data-testid="nav-home">SMARTStore</a>
     <a href="/cart" class="cart-link" data-testid="nav-cart">
         Carrito
         <span class="badge" data-testid="cart-count" th:text="${cartCount}">0</span>
@@ -16,8 +16,8 @@
 </header>
 
 <main class="container">
-    <h1>Catalogo</h1>
-    <p class="subtitle">Demo sin pagos reales: al finalizar solo se guarda un pedido simulado.</p>
+    <h1>Catálogo</h1>
+    <p class="subtitle">Website diseñado para la realización de pruebas, sin pagos reales: al finalizar únicamente se guarda un pedido simulado.</p>
 
     <div class="grid" th:if="${!#lists.isEmpty(products)}">
         <article class="card" data-testid="product-card" th:each="p : ${products}">
@@ -43,6 +43,6 @@
     <p th:if="${#lists.isEmpty(products)}" data-testid="empty-catalog">No hay productos disponibles.</p>
 </main>
 
-<footer class="footer">Proyecto de portfolio QA Automation</footer>
+<footer class="footer">Proyecto diseñado para QA Automation</footer>
 </body>
 </html>

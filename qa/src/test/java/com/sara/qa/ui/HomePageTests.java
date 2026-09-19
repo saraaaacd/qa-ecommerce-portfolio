@@ -34,10 +34,10 @@ class HomePageTests extends BaseTest {
         HomePage home = new HomePage(driver()).open();
         assertEquals("0", home.cartCount());
 
-        home.addToCart("Silla ergonomica");
+        home.addToCart("Silla ergonómica");
         assertEquals("1", home.cartCount());
 
-        home.addToCart("Silla ergonomica");
+        home.addToCart("Silla ergonómica");
         assertEquals("2", home.cartCount());
     }
 
@@ -64,7 +64,7 @@ class HomePageTests extends BaseTest {
 
         List<String> prices = home.productPrices();
         assertTrue(prices.stream().allMatch(p -> p.endsWith("€")));
-        assertEquals(Set.of("79,90 €", "24,50 €", "149,00 €", "59,90 €", "39,90 €", "219,00 €"),
+        assertEquals(Set.of("39,90 €", "24,50 €", "149,00 €", "29,90 €", "167,00 €"),
                 Set.copyOf(prices));
     }
 

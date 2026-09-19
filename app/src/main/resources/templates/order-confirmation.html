@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Pedido confirmado - Tienda QA</title>
+    <title>Pedido confirmado - SMARTStore</title>
     <link rel="stylesheet" th:href="@{/css/store.css}"/>
 </head>
 <body>
 <header class="nav">
-    <a href="/" class="brand" data-testid="nav-home">Tienda QA</a>
+    <a href="/" class="brand" data-testid="nav-home">SMARTStore</a>
     <a href="/cart" class="cart-link" data-testid="nav-cart">
         Carrito
         <span class="badge" data-testid="cart-count" th:text="${cartCount}">0</span>
@@ -57,7 +57,7 @@
         </div>
 
         <p class="shipping">
-            Envio a: <span th:text="${order.address}">direccion</span>,
+            Envío a: <span th:text="${order.address}">dirección</span>,
             <span th:text="${order.zip}">CP</span>
             <span th:text="${order.city}">ciudad</span>
         </p>
@@ -68,6 +68,6 @@
     </div>
 </main>
 
-<footer class="footer">Proyecto de portfolio QA Automation</footer>
+<footer class="footer">Proyecto diseñado para QA Automation</footer>
 </body>
 </html>

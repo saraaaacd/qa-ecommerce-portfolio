@@ -17,7 +17,7 @@ class CheckoutUiTests extends BaseTest {
 
     private CheckoutPage checkoutConProductoEnCarrito() {
         HomePage home = new HomePage(driver()).open();
-        home.addToCart("Silla ergonomica");
+        home.addToCart("Silla ergonómica");
         CartPage cart = home.openCart();
         return cart.checkout();
     }

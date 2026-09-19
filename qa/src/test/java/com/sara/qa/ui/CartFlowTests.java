@@ -23,15 +23,15 @@ class CartFlowTests extends BaseTest {
     void fullPurchaseJourney() {
         HomePage home = new HomePage(driver()).open();
 
-        home.addToCart("Teclado mecanico RGB");
+        home.addToCart("Teclado RGB blanco");
         home.addToCart("Monitor 24\" Full HD");
 
         CartPage cart = home.openCart();
         assertEquals(2, cart.lineCount());
         assertTrue(cart.lineNames().containsAll(
-                List.of("Teclado mecanico RGB", "Monitor 24\" Full HD")));
-        // 79,90 + 149,00
-        assertEquals("228,90 €", cart.total());
+                List.of("Teclado RGB blanco", "Monitor 24\" Full HD")));
+        // 39,90 + 149,00
+        assertEquals("188,90 €", cart.total());
 
         CheckoutPage checkout = cart.checkout();
         checkout.fill("Ana Ejemplo", "ana@demo.dev", "600000000",
@@ -39,8 +39,8 @@ class CartFlowTests extends BaseTest {
 
         OrderConfirmationPage confirmation = checkout.submit();
         assertTrue(confirmation.orderNumber().startsWith("ORD-"));
-        assertEquals("228,90 €", confirmation.total());
-        assertTrue(confirmation.lineNames().contains("Teclado mecanico RGB"));
+        assertEquals("188,90 €", confirmation.total());
+        assertTrue(confirmation.lineNames().contains("Teclado RGB blanco"));
 
         // La navegacion vuelve a estar limpia: volvemos al catalogo
         String url = confirmation.currentUrl();
@@ -51,7 +51,7 @@ class CartFlowTests extends BaseTest {
     @DisplayName("Quitar un producto recalcula el total")
     void removeItemUpdatesTotal() {
         HomePage home = new HomePage(driver()).open();
-        home.addToCart("Raton inalambrico");
+        home.addToCart("Ratón inalámbrico");
         home.addToCart("Webcam 1080p");
 
         CartPage cart = home.openCart();
@@ -68,7 +68,7 @@ class CartFlowTests extends BaseTest {
     @DisplayName("Desde el carrito con productos se puede volver al catalogo")
     void backButtonReturnsToStore() {
         HomePage home = new HomePage(driver()).open();
-        home.addToCart("Raton inalambrico");
+        home.addToCart("Ratón inalámbrico");
 
         CartPage cart = home.openCart();
         assertEquals(1, cart.lineCount());

@@ -29,24 +29,24 @@ public class DataSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) {
         List<Product> catalog = List.of(
-                new Product("KB-001", "Teclado mecanico RGB",
-                        "Teclado mecanico con retroiluminacion RGB y switches lineales.", new BigDecimal("79.90"), "Perifericos",
-                        "/images/products/teclado-rgb.svg"),
-                new Product("MO-002", "Raton inalambrico",
-                        "Raton ergonomico inalambrico con sensor optico de alta precision.", new BigDecimal("24.50"), "Perifericos",
-                        "/images/products/raton-inalambrico.svg"),
+                new Product("KB-001", "Teclado RGB blanco",
+                        "Teclado retroiluminación RGB y switches lineales.", new BigDecimal("39.90"), "Perifericos",
+                        "/images/products/teclado-rgb.jpg"),
+                new Product("MO-002", "Ratón inalámbrico",
+                        "Ratón inalámbrico con sensor óptico de alta precisión.", new BigDecimal("24.50"), "Perifericos",
+                        "/images/products/raton-inalambrico.jpg"),
                 new Product("MN-003", "Monitor 24\" Full HD",
-                        "Monitor IPS de 24 pulgadas con resolucion Full HD y 75 Hz.", new BigDecimal("149.00"), "Monitores",
-                        "/images/products/monitor-24.svg"),
+                        "Monitor IPS de 24 pulgadas con resolución Full HD.", new BigDecimal("149.00"), "Monitores",
+                        "/images/products/monitor.jpg"),
                 new Product("AU-004", "Auriculares Bluetooth",
-                        "Auriculares over-ear con cancelacion de ruido y 30 horas de bateria.", new BigDecimal("59.90"), "Audio",
-                        "/images/products/auriculares-bluetooth.svg"),
+                        "Auriculares inalámbricos con cancelación de ruido y 30 horas de batería.", new BigDecimal("29.90"), "Audio",
+                        "/images/products/auriculares-bluetooth.jpg"),
                 new Product("WE-005", "Webcam 1080p",
-                        "Webcam Full HD con microfono integrado y correccion de luz ambiente.", new BigDecimal("39.90"), "Accesorios",
-                        "/images/products/webcam-1080p.svg"),
-                new Product("CH-006", "Silla ergonomica",
-                        "Silla de oficina ergonomica con soporte lumbar ajustable.", new BigDecimal("219.00"), "Mobiliario",
-                        "/images/products/silla-ergonomica.svg")
+                        "Webcam Full HD con micrófono integrado.", new BigDecimal("39.90"), "Accesorios",
+                        "/images/products/webcam.png"),
+                new Product("CH-006", "Silla ergonómica",
+                        "Silla de oficina ergonómica con soporte lumbar ajustable.", new BigDecimal("167.00"), "Mobiliario",
+                        "/images/products/silla-ergonómica.jpg")
         );
 
         int nuevos = 0;

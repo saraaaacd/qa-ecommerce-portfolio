@@ -12,11 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("api")
-@DisplayName("Catalogo - API")
+@DisplayName("Catálogo - API")
 class CatalogApiTests extends BaseApiTest {
 
     @Test
-    @DisplayName("GET /api/products devuelve el catalogo semilla (6 productos)")
+    @DisplayName("GET /api/products devuelve el catálogo semilla (6 productos)")
     void catalogHasSeededProducts() {
         List<Map<String, Object>> products = client.getProducts()
                 .then().statusCode(200)
@@ -25,8 +25,8 @@ class CatalogApiTests extends BaseApiTest {
         assertEquals(6, products.size());
 
         List<String> names = products.stream().map(p -> p.get("name").toString()).toList();
-        assertTrue(names.contains("Teclado mecanico RGB"));
-        assertTrue(names.contains("Raton inalambrico"));
+        assertTrue(names.contains("Teclado RGB blanco"));
+        assertTrue(names.contains("Ratón inalámbrico"));
         assertTrue(names.contains("Monitor 24\" Full HD"));
 
         // Todo producto tiene precio > 0, sku y categoria
@@ -39,13 +39,13 @@ class CatalogApiTests extends BaseApiTest {
     @Test
     @DisplayName("GET /api/products/{id} devuelve el producto")
     void productByIdReturnsExpectedProduct() {
-        long id = client.productId("Teclado mecanico RGB");
+        long id = client.productId("Teclado RGB blanco");
 
         Map<String, Object> product = client.getProduct(id)
                 .then().statusCode(200)
                 .extract().body().jsonPath().getMap("$");
 
-        assertEquals("Teclado mecanico RGB", product.get("name"));
+        assertEquals("Teclado RGB blanco", product.get("name"));
         assertEquals("KB-001", product.get("sku"));
     }
 

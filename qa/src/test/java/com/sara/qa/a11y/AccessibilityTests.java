@@ -56,7 +56,7 @@ class AccessibilityTests extends BaseTest {
     @DisplayName("Carrito (con items) sin violaciones criticas WCAG")
     void cartWithItemsHasNoCriticalViolations() {
         HomePage home = new HomePage(driver()).open();
-        home.addToCart("Raton inalambrico");
+        home.addToCart("Ratón inalámbrico");
 
         assertNoCriticalViolations("Cart", analyze(Config.appBaseUrl() + "/cart"));
     }
@@ -65,7 +65,7 @@ class AccessibilityTests extends BaseTest {
     @DisplayName("Formulario de checkout sin violaciones criticas WCAG")
     void checkoutHasNoCriticalViolations() {
         HomePage home = new HomePage(driver()).open();
-        home.addToCart("Raton inalambrico");
+        home.addToCart("Ratón inalámbrico");
         home.openCart().checkout();
 
         assertNoCriticalViolations("Checkout", analyze(Config.appBaseUrl() + "/checkout"));
