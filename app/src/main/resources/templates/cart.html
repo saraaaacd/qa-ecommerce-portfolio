@@ -44,7 +44,15 @@
                 </td>
                 <td data-testid="line-unit-price"
                     th:text="${#numbers.formatDecimal(line.unitPrice, 1, 2, 'COMMA') + ' €'}">0,00 €</td>
-                <td data-testid="line-qty" th:text="${line.quantity}">1</td>
+                <td data-testid="line-qty">
+                    <form class="qty-form" method="post"
+                          th:action="@{/cart/items/update/{id}(id=${line.productId})}">
+                        <input class="qty-input" type="number" name="quantity" min="1"
+                               th:value="${line.quantity}" data-testid="qty-input"
+                               th:aria-label="${'Cantidad de ' + line.name}"/>
+                        <button class="btn btn-ghost" type="submit" data-testid="update-qty">Actualizar</button>
+                    </form>
+                </td>
                 <td data-testid="line-total"
                     th:text="${#numbers.formatDecimal(line.total, 1, 2, 'COMMA') + ' €'}">0,00 €</td>
                 <td>

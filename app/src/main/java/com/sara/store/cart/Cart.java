@@ -25,6 +25,13 @@ public class Cart {
         lines.remove(productId);
     }
 
+    public void updateQuantity(Long productId, int quantity) {
+        CartLine line = lines.get(productId);
+        if (line != null) {
+            line.setQuantity(quantity);
+        }
+    }
+
     public void clear() {
         lines.clear();
     }

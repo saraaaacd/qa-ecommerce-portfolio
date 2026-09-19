@@ -11,7 +11,7 @@ public class CreateOrderRequest {
     @NotBlank(message = "El nombre es obligatorio")
     private String customerName;
 
-    @Email(message = "El email no tiene un formato valido (ej. nombre@dominio.com)")
+    @Email(message = "El email no tiene un formato valido")
     private String email;
 
     private String phone;

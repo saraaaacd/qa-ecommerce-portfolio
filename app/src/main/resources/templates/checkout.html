@@ -32,7 +32,7 @@
             <input id="email" type="email" th:field="*{email}" data-testid="email"/>
             <span class="error" th:errors="*{email}" data-testid="email-error"></span>
             <span class="hint" th:if="${#fields.hasErrors('email')}" data-testid="email-format-hint">
-                Formato válido: nombre@dominio.com
+                Formato válido: nombre@dominio.tld
             </span>
         </div>
 
@@ -62,13 +62,53 @@
 
         <div class="actions">
             <a class="btn" data-testid="back-to-cart" href="/cart">Volver al carrito</a>
-            <button class="btn btn-primary" type="submit" data-testid="submit-order">
+            <button class="btn btn-primary" type="button" data-testid="submit-order" id="submit-order-btn">
                 Confirmar pedido
             </button>
         </div>
     </form>
+
+    <dialog id="confirm-dialog" class="confirm-dialog">
+        <div class="confirm-dialog-content">
+            <h2>Confirmar compra</h2>
+            <p>¿Estás seguro de que quieres finalizar el pedido? Se creará el pedido simulado.</p>
+            <div class="confirm-dialog-actions">
+                <button type="button" class="btn" id="confirm-cancel" data-testid="confirm-cancel">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="confirm-ok" data-testid="confirm-ok">Sí, confirmar</button>
+            </div>
+        </div>
+    </dialog>
 </main>
 
 <footer class="footer">Proyecto diseñado para QA Automation</footer>
+
+<script>
+    (function () {
+        var form = document.querySelector('.checkout-form');
+        var submitBtn = document.getElementById('submit-order-btn');
+        var dialog = document.getElementById('confirm-dialog');
+        var okBtn = document.getElementById('confirm-ok');
+        var cancelBtn = document.getElementById('confirm-cancel');
+
+        submitBtn.addEventListener('click', function () {
+            dialog.showModal();
+        });
+
+        cancelBtn.addEventListener('click', function () {
+            dialog.close();
+        });
+
+        okBtn.addEventListener('click', function () {
+            dialog.close();
+            form.submit();
+        });
+
+        dialog.addEventListener('click', function (e) {
+            if (e.target === dialog) {
+                dialog.close();
+            }
+        });
+    })();
+</script>
 </body>
 </html>

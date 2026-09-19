@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CartController {
@@ -24,6 +25,12 @@ public class CartController {
     @PostMapping("/cart/items/remove/{productId}")
     public String remove(@PathVariable Long productId) {
         cart.remove(productId);
+        return "redirect:/cart";
+    }
+
+    @PostMapping("/cart/items/update/{productId}")
+    public String update(@PathVariable Long productId, @RequestParam int quantity) {
+        cart.setQuantity(productId, quantity);
         return "redirect:/cart";
     }
 

@@ -51,6 +51,23 @@ public class CartPage extends BasePage {
         return this;
     }
 
+    public CartPage setQuantity(String productName, int quantity) {
+        By line = By.xpath(
+                "//tr[@data-testid='cart-line']"
+                        + "[.//td[@data-testid='line-name'][normalize-space()='"
+                        + productName + "']]");
+        WebElement row = visible(line);
+        WebElement input = row.findElement(testId("qty-input"));
+        input.clear();
+        input.sendKeys(String.valueOf(quantity));
+        row.findElement(testId("update-qty")).click();
+
+        // El form hace redirect a /cart y recalcula el total
+        wait.until(driver -> driver.findElements(testId("qty-input")).stream()
+                .anyMatch(q -> q.getAttribute("value").equals(String.valueOf(quantity))));
+        return this;
+    }
+
     public CheckoutPage checkout() {
         click(CHECKOUT);
         return new CheckoutPage(driver);

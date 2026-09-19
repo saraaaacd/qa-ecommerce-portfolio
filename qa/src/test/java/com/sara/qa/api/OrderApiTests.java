@@ -76,6 +76,17 @@ class OrderApiTests extends BaseApiTest {
     }
 
     @Test
+    @DisplayName("Email incompleto como ana@. devuelve 400")
+    void incompleteEmailReturns400() {
+        long id = client.productId(PRODUCTO);
+        client.addToCart(id, 1).then().statusCode(201);
+
+        client.createOrder("Ana Ejemplo", "ana@.", "",
+                        "Calle Mayor 1", "Madrid", "28001")
+                .then().statusCode(400);
+    }
+
+    @Test
     @DisplayName("Campos obligatorios solo con espacios devuelven 400")
     void whitespaceOnlyRequiredFieldsReturn400() {
         long id = client.productId(PRODUCTO);

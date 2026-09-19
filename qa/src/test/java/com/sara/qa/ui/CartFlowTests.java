@@ -48,6 +48,35 @@ class CartFlowTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Modificar la cantidad de un articulo actualiza el total")
+    void updateQuantityUpdatesTotal() {
+        HomePage home = new HomePage(driver()).open();
+        home.addToCart("Monitor 24\" Full HD");
+        home.addToCart("Monitor 24\" Full HD");
+
+        CartPage cart = home.openCart();
+        // Se agrupa en una sola linea con cantidad 2
+        assertEquals(1, cart.lineCount());
+        assertEquals("298,00 €", cart.total());
+
+        cart.setQuantity("Monitor 24\" Full HD", 1);
+        assertEquals("149,00 €", cart.total());
+    }
+
+    @Test
+    @DisplayName("Subir la cantidad desde el carrito recalcula el total")
+    void increaseQuantityFromCart() {
+        HomePage home = new HomePage(driver()).open();
+        home.addToCart("Ratón inalámbrico");
+
+        CartPage cart = home.openCart();
+        assertEquals("24,50 €", cart.total());
+
+        cart.setQuantity("Ratón inalámbrico", 3);
+        assertEquals("73,50 €", cart.total());
+    }
+
+    @Test
     @DisplayName("Quitar un producto recalcula el total")
     void removeItemUpdatesTotal() {
         HomePage home = new HomePage(driver()).open();

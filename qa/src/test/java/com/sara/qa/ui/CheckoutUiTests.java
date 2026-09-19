@@ -92,6 +92,17 @@ class CheckoutUiTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Emails incompletos como ana@. son rechazados")
+    void incompleteEmailIsRejected() {
+        CheckoutPage checkout = checkoutConProductoEnCarrito();
+        checkout.fill("Ana Ejemplo", "ana@.", "", "Calle Mayor 1", "Madrid", "28001");
+        checkout.submit();
+
+        assertTrue(checkout.hasFieldError("email-error"));
+        assertTrue(checkout.hasFieldError("email-format-hint"));
+    }
+
+    @Test
     @DisplayName("Sin carrito, el checkout redirige a la pagina del carrito")
     void emptyCartRedirectsToCart() {
         // El boton de checkout solo se renderiza con articulos en el carrito,

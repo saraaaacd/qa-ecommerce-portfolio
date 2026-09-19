@@ -26,6 +26,8 @@ public class CheckoutPage extends BasePage {
 
     public OrderConfirmationPage submit() {
         click(testId("submit-order"));
+        // Confirmar en el modal de confirmación
+        click(testId("confirm-ok"));
         return new OrderConfirmationPage(driver);
     }
 

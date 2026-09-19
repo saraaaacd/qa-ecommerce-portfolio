@@ -38,6 +38,13 @@ public class CartService {
         cart.remove(productId);
     }
 
+    public void setQuantity(Long productId, int quantity) {
+        if (quantity < 1) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La cantidad debe ser mayor que 0");
+        }
+        cart.updateQuantity(productId, quantity);
+    }
+
     public void clear() {
         cart.clear();
     }

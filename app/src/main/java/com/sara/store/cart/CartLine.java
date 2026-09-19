@@ -26,6 +26,13 @@ public class CartLine {
         this.quantity += quantity;
     }
 
+    public void setQuantity(int quantity) {
+        if (quantity < 1) {
+            throw new IllegalArgumentException("La cantidad debe ser mayor que 0");
+        }
+        this.quantity = quantity;
+    }
+
     public BigDecimal total() {
         return unitPrice.multiply(BigDecimal.valueOf(quantity));
     }

@@ -223,6 +223,20 @@ h1 {
     border-top: 1px solid #eef0f4;
 }
 
+.qty-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.qty-input {
+    width: 4rem;
+    border: 1px solid #cdd3de;
+    border-radius: 8px;
+    padding: 0.35rem 0.5rem;
+    font-size: 0.9rem;
+}
+
 .cart-total {
     display: flex;
     align-items: center;
@@ -294,6 +308,42 @@ h1 {
     color: #1d4ed8;
     font-size: 0.82rem;
     margin-top: 0.25rem;
+}
+
+.confirm-dialog {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    padding: 0;
+    max-width: 400px;
+    width: 90%;
+}
+
+.confirm-dialog::backdrop {
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(2px);
+}
+
+.confirm-dialog-content {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.confirm-dialog-content h2 {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+}
+
+.confirm-dialog-content p {
+    margin: 0 0 1.25rem;
+    color: #4a4f5c;
+    line-height: 1.5;
+}
+
+.confirm-dialog-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
 }
 
 /* Errores / mensajes */
