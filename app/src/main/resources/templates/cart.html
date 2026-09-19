@@ -16,6 +16,10 @@
 </header>
 
 <main class="container">
+    <div class="actions">
+        <a class="btn btn-ghost" data-testid="back-home" href="/">&larr; Volver a la tienda</a>
+    </div>
+
     <h1>Tu carrito</h1>
 
     <th:block th:if="${!cart.isEmpty()}">
@@ -39,10 +43,10 @@
                     </div>
                 </td>
                 <td data-testid="line-unit-price"
-                    th:text="${#numbers.formatDecimal(line.unitPrice, 1, 2, 'POINT')}">0.00</td>
+                    th:text="${#numbers.formatDecimal(line.unitPrice, 1, 2, 'COMMA') + ' €'}">0,00 €</td>
                 <td data-testid="line-qty" th:text="${line.quantity}">1</td>
                 <td data-testid="line-total"
-                    th:text="${#numbers.formatDecimal(line.total, 1, 2, 'POINT')}">0.00</td>
+                    th:text="${#numbers.formatDecimal(line.total, 1, 2, 'COMMA') + ' €'}">0,00 €</td>
                 <td>
                     <form method="post" th:action="@{/cart/items/remove/{id}(id=${line.productId})}">
                         <button class="btn btn-ghost" type="submit" data-testid="remove-item">Quitar</button>
@@ -55,11 +59,10 @@
         <div class="cart-total">
             <span>Total:</span>
             <strong data-testid="cart-total"
-                    th:text="${#numbers.formatDecimal(cart.total, 1, 2, 'POINT')}">0.00</strong>
+                    th:text="${#numbers.formatDecimal(cart.total, 1, 2, 'COMMA') + ' €'}">0,00 €</strong>
         </div>
 
         <div class="actions">
-            <a class="btn" data-testid="continue-shopping" href="/">Seguir comprando</a>
             <a class="btn btn-primary" data-testid="checkout" href="/checkout">Finalizar compra</a>
         </div>
     </th:block>

@@ -32,7 +32,7 @@
             </div>
             <div class="card-footer">
                 <strong class="price" data-testid="product-price"
-                        th:text="${#numbers.formatDecimal(p.price, 1, 2, 'POINT')}">0.00</strong>
+                        th:text="${#numbers.formatDecimal(p.price, 1, 2, 'COMMA') + ' €'}">0,00 €</strong>
                 <form method="post" th:action="@{/cart/items/add/{id}(id=${p.id})}">
                     <button class="btn btn-primary" type="submit" data-testid="add-to-cart">Anadir</button>
                 </form>

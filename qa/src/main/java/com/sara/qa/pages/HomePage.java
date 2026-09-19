@@ -37,6 +37,12 @@ public class HomePage extends BasePage {
                 .toList();
     }
 
+    public List<String> productPrices() {
+        return allVisible(PRODUCT_CARD).stream()
+                .map(card -> card.findElement(PRICE).getText())
+                .toList();
+    }
+
     public int productCount() {
         return allVisible(PRODUCT_CARD).size();
     }

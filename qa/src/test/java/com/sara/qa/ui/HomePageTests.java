@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -57,12 +58,27 @@ class HomePageTests extends BaseTest {
     }
 
     @Test
-    @DisplayName("El menu permite navegar al carrito")
+    @DisplayName("Los precios se muestran en euros con coma decimal")
+    void pricesShownInEuros() {
+        HomePage home = new HomePage(driver()).open();
+
+        List<String> prices = home.productPrices();
+        assertTrue(prices.stream().allMatch(p -> p.endsWith("€")));
+        assertEquals(Set.of("79,90 €", "24,50 €", "149,00 €", "59,90 €", "39,90 €", "219,00 €"),
+                Set.copyOf(prices));
+    }
+
+    @Test
+    @DisplayName("El menu permite navegar al carrito y volver al catalogo")
     void navMenuOpensEmptyCart() {
         HomePage home = new HomePage(driver()).open();
 
         CartPage cart = home.openCart();
         assertTrue(cart.isEmptyState());
         assertTrue(cart.currentUrl().endsWith("/cart"));
+
+        home = cart.backToStore();
+        assertTrue(home.currentUrl().endsWith("/"));
+        assertEquals(6, home.productCount());
     }
 }

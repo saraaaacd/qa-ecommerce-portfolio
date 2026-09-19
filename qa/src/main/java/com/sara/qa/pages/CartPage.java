@@ -56,6 +56,11 @@ public class CartPage extends BasePage {
         return new CheckoutPage(driver);
     }
 
+    public HomePage backToStore() {
+        click(testId("back-home"));
+        return new HomePage(driver);
+    }
+
     public boolean isEmptyState() {
         return isVisible(CART_EMPTY);
     }

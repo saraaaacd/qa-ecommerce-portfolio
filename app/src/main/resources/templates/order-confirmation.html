@@ -45,7 +45,7 @@
                 </td>
                 <td th:text="${line.quantity}">1</td>
                 <td data-testid="order-line-total"
-                    th:text="${#numbers.formatDecimal(line.total, 1, 2, 'POINT')}">0.00</td>
+                    th:text="${#numbers.formatDecimal(line.total, 1, 2, 'COMMA') + ' €'}">0,00 €</td>
             </tr>
             </tbody>
         </table>
@@ -53,7 +53,7 @@
         <div class="cart-total">
             <span>Total:</span>
             <strong data-testid="order-total"
-                    th:text="${#numbers.formatDecimal(order.totalAmount, 1, 2, 'POINT')}">0.00</strong>
+                    th:text="${#numbers.formatDecimal(order.totalAmount, 1, 2, 'COMMA') + ' €'}">0,00 €</strong>
         </div>
 
         <p class="shipping">

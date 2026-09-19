@@ -30,8 +30,8 @@ class CartFlowTests extends BaseTest {
         assertEquals(2, cart.lineCount());
         assertTrue(cart.lineNames().containsAll(
                 List.of("Teclado mecanico RGB", "Monitor 24\" Full HD")));
-        // 79.90 + 149.00
-        assertEquals("228.90", cart.total());
+        // 79,90 + 149,00
+        assertEquals("228,90 €", cart.total());
 
         CheckoutPage checkout = cart.checkout();
         checkout.fill("Ana Ejemplo", "ana@demo.dev", "600000000",
@@ -39,7 +39,7 @@ class CartFlowTests extends BaseTest {
 
         OrderConfirmationPage confirmation = checkout.submit();
         assertTrue(confirmation.orderNumber().startsWith("ORD-"));
-        assertEquals("228.90", confirmation.total());
+        assertEquals("228,90 €", confirmation.total());
         assertTrue(confirmation.lineNames().contains("Teclado mecanico RGB"));
 
         // La navegacion vuelve a estar limpia: volvemos al catalogo
@@ -55,12 +55,26 @@ class CartFlowTests extends BaseTest {
         home.addToCart("Webcam 1080p");
 
         CartPage cart = home.openCart();
-        // 24.50 + 39.90
-        assertEquals("64.40", cart.total());
+        // 24,50 + 39,90
+        assertEquals("64,40 €", cart.total());
 
         cart.removeItem("Webcam 1080p");
 
         assertEquals(1, cart.lineCount());
-        assertEquals("24.50", cart.total());
+        assertEquals("24,50 €", cart.total());
+    }
+
+    @Test
+    @DisplayName("Desde el carrito con productos se puede volver al catalogo")
+    void backButtonReturnsToStore() {
+        HomePage home = new HomePage(driver()).open();
+        home.addToCart("Raton inalambrico");
+
+        CartPage cart = home.openCart();
+        assertEquals(1, cart.lineCount());
+
+        home = cart.backToStore();
+        assertTrue(home.currentUrl().endsWith("/"));
+        assertEquals(6, home.productCount());
     }
 }
