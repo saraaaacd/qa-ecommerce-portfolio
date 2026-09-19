@@ -30,10 +30,10 @@ public class DataSeeder implements CommandLineRunner {
     public void run(String... args) {
         List<Product> catalog = List.of(
                 new Product("KB-001", "Teclado RGB blanco",
-                        "Teclado retroiluminación RGB y switches lineales.", new BigDecimal("39.90"), "Perifericos",
+                        "Teclado retroiluminación RGB y switches lineales.", new BigDecimal("39.90"), "Periféricos",
                         "/images/products/teclado-rgb.jpg"),
                 new Product("MO-002", "Ratón inalámbrico",
-                        "Ratón inalámbrico con sensor óptico de alta precisión.", new BigDecimal("24.50"), "Perifericos",
+                        "Ratón inalámbrico con sensor óptico de alta precisión.", new BigDecimal("24.50"), "Periféricos",
                         "/images/products/raton-inalambrico.jpg"),
                 new Product("MN-003", "Monitor 24\" Full HD",
                         "Monitor IPS de 24 pulgadas con resolución Full HD.", new BigDecimal("149.00"), "Monitores",

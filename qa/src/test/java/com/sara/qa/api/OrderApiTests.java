@@ -76,6 +76,16 @@ class OrderApiTests extends BaseApiTest {
     }
 
     @Test
+    @DisplayName("Campos obligatorios solo con espacios devuelven 400")
+    void whitespaceOnlyRequiredFieldsReturn400() {
+        long id = client.productId(PRODUCTO);
+        client.addToCart(id, 1).then().statusCode(201);
+
+        client.createOrder("   ", "ana@demo.dev", "", "   ", "   ", "   ")
+                .then().statusCode(400);
+    }
+
+    @Test
     @DisplayName("Pedido inexistente devuelve 404")
     void unknownOrderReturns404() {
         client.getOrder("ORD-00000000-00000").then().statusCode(404);

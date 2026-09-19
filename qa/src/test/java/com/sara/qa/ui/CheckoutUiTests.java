@@ -5,10 +5,12 @@ import com.sara.qa.config.Config;
 import com.sara.qa.pages.CartPage;
 import com.sara.qa.pages.CheckoutPage;
 import com.sara.qa.pages.HomePage;
+import com.sara.qa.pages.OrderConfirmationPage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("ui")
@@ -31,6 +33,51 @@ class CheckoutUiTests extends BaseTest {
 
         assertTrue(checkout.hasFieldError("customer-name-error"));
         assertTrue(checkout.currentUrl().contains("/checkout"));
+    }
+
+    @Test
+    @DisplayName("Todos los campos obligatorios en blanco muestran todos los errores")
+    void allRequiredFieldsBlankShowsAllErrors() {
+        CheckoutPage checkout = checkoutConProductoEnCarrito();
+        checkout.fill("", "", "", "", "", "");
+        checkout.submit();
+
+        assertTrue(checkout.hasFieldError("customer-name-error"));
+        assertTrue(checkout.hasFieldError("address-error"));
+        assertTrue(checkout.hasFieldError("city-error"));
+        assertTrue(checkout.hasFieldError("zip-error"));
+        // El email es opcional: en blanco no muestra error
+        assertFalse(checkout.hasFieldError("email-error"));
+        assertTrue(checkout.currentUrl().contains("/checkout"));
+
+        // El pedido no se ha creado: el carrito sigue conservando el articulo
+        driver().get(Config.appBaseUrl() + "/cart");
+        assertFalse(new CartPage(driver()).isEmptyState());
+    }
+
+    @Test
+    @DisplayName("Campos obligatorios solo con espacios muestran error de validacion")
+    void whitespaceOnlyRequiredFieldsShowsErrors() {
+        CheckoutPage checkout = checkoutConProductoEnCarrito();
+        checkout.fill("   ", "ana@demo.dev", "", "   ", "   ", "   ");
+        checkout.submit();
+
+        assertTrue(checkout.hasFieldError("customer-name-error"));
+        assertTrue(checkout.hasFieldError("address-error"));
+        assertTrue(checkout.hasFieldError("city-error"));
+        assertTrue(checkout.hasFieldError("zip-error"));
+        assertTrue(checkout.currentUrl().contains("/checkout"));
+    }
+
+    @Test
+    @DisplayName("Email en blanco es valido porque el campo es opcional")
+    void blankEmailIsAccepted() {
+        CheckoutPage checkout = checkoutConProductoEnCarrito();
+        checkout.fill("Ana Ejemplo", "", "", "Calle Mayor 1", "Madrid", "28001");
+        OrderConfirmationPage confirmation = checkout.submit();
+
+        assertTrue(confirmation.currentUrl().contains("/orders/"));
+        assertTrue(confirmation.orderNumber().startsWith("ORD-"));
     }
 
     @Test
